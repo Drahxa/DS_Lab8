@@ -1,85 +1,76 @@
 public class Queue<T>
 {
-    //be sure that your attributes are protected, so subclasses can use them
-	protected Node<T> head;
-	protected Node<T> back;
-	protected int size;
-
-
-   public Queue()
-   {
-	   this.head = null;
-	   this.back = null;
-	   this.size = 0;
-	   
-   }
-
-
-    /**Adds val to the end of the queue
-     */
-   public void push(T val)
-   {
-		Node<T> n = new Node(val, null);
-	   if ( head == null ) {
-
-		   head = n;
-		   back = n;
-		   
-	   } else {
-			back.next = n;
-			back = n;
-
-	   }
-	   
-	   size++;
-   }
-
-
-    /**
-       removes and returns the oldest value in the queue
-       throws QueueUnderFlowException if the queue is empty
-     */
-   public T pop()
-   {
-	   
-	   if(head == null) {
-    	   
-    	   throw new QueueUnderFlowException();
-    	   
-	   }
-	   
-	   T oldVal = head.val;
-	   head = head.next;
-	   size--;
-
-	   if (head == null){
-		back = null;
-	   }
-       
-       return oldVal;
-   }    
-
-
-    /**
-      returns true if the queue is empty
-     */
-
-   public boolean isEmpty()
-   {
-      return size == 0;
-   }
-
-
-
-
-}
-
-class Node<T>{
-	T val;
-	Node<T> next;
+   //be sure that your attributes are protected, so subclasses can use them
+	public int size;
+	public Node head;
+	public Node tail;
 	
-	public Node(T val, Node<T> next) {
-		this.val = val;
-		this.next = next;
-	}
+  public class Node
+  {
+	   T val = null;
+	   Node next = null;
+	   public Node(T val, T next) {
+		   this.val = val;
+		   next = null;
+		  
+	   }
+	  
+	  
+ 
+  }
+  public Queue()
+  {
+	   head = null;
+	   tail = null;
+	   size = 0;
+  }
+   /**Adds val to the end of the queue
+    */
+  public void push(T val)
+  {
+	   if (head == null) {
+		   head = new Node(val, null);
+		   tail = head;
+		  
+	   }
+	   else {
+		   tail.next = new Node(val, null);
+		   tail = tail.next;
+		  
+	   }
+		  
+	  
+ 
+  }
+   /**
+      removes and returns the oldest value in the queue
+      throws QueueUnderFlowException if the queue is empty
+    */
+  public T pop()
+  {
+	   if(head == null) {
+		   throw new QueueUnderFlowException();
+		  
+	   }
+	   if (head == tail) {
+		   T temp = head.val;
+		   head = null;
+		   tail = null;
+		   return temp;
+	   }
+	   else {
+		   T temp = head.val;
+		   head = head.next;
+		   return temp;
+		  
+	   }
+  }   
+   /**
+     returns true if the queue is empty
+    */
+  public boolean isEmpty()
+  {
+      return (head == null);
+  }
 }
+
