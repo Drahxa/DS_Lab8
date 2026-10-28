@@ -1,14 +1,14 @@
 public class Queue<T>
 {
     //be sure that your attributes are protected, so subclasses can use them
-	protected Node front;
-	protected Node back;
+	protected Node<T> head;
+	protected Node<T> back;
 	protected int size;
 
 
    public Queue()
    {
-	   this.front = null;
+	   this.head = null;
 	   this.back = null;
 	   this.size = 0;
 	   
@@ -19,21 +19,19 @@ public class Queue<T>
      */
    public void push(T val)
    {
-	   if ( front == null ) {
-		   Node n = new Node(val, null);
-		   
-		   front = n;
+		Node<T> n = new Node(val, null);
+	   if ( head == null ) {
+
+		   head = n;
 		   back = n;
 		   
 	   } else {
-		   Node n = new Node(val, null);
-		   
-		   for(int i = 0; i < size; i ++) {
-			   curr =
-		   }
+			back.next = n;
+			back = n;
+
 	   }
 	   
-	   
+	   size++;
    }
 
 
@@ -43,24 +41,20 @@ public class Queue<T>
      */
    public T pop()
    {
-	   T oldVal;
-       if(front == null) {
+	   
+	   if(head == null) {
     	   
     	   throw new QueueUnderFlowException();
     	   
-       } else if (size == 1){
-    	   
-    	   oldVal = front.val;
-    	   
-    	   front = null;
-    	   back = null;
-       
-       } else {
-    	   
-    	   oldVal = front.val;
-    	   front = front.next;
-    	   
-       }
+	   }
+	   
+	   T oldVal = head.val;
+	   head = head.next;
+	   size--;
+
+	   if (head == null){
+		back = null;
+	   }
        
        return oldVal;
    }    
@@ -82,9 +76,9 @@ public class Queue<T>
 
 class Node<T>{
 	T val;
-	Node next;
+	Node<T> next;
 	
-	public Node(T val, Node next) {
+	public Node(T val, Node<T> next) {
 		this.val = val;
 		this.next = next;
 	}
